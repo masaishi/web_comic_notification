@@ -72,4 +72,8 @@ class ComicsController < ApplicationController
     def comic_params
       params.require(:comic).permit(:name, :url, :last_story)
     end
+
+    def user_params
+      params.require(:comic).permit(:user_id)
+    end
 end

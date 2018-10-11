@@ -24,15 +24,23 @@ class WebhookController < ApplicationController
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
-
-            # e_message = event.message['text'].split(" ")
-            # if e_message.include?("kaka")
-            message = {
-              type: 'text',
-              text: "#{event.source[userId]}"
-            }
-            response = client.reply_message(event['replyToken'], message)
-            p response
+            case event.message['text']
+            when /http(s|)/
+              text = /(?<=http(s|)\/\/(www|))\w+(?=\/)/.match(event.message['text'])
+              message = {
+                type: 'text',
+                text: "#{text}"
+              }
+              response = client.reply_message(event['replyToken'], message)
+              p response
+            else
+              message = {
+                type: 'text',
+                text: "それ以外"
+              }
+              response = client.reply_message(event['replyToken'], message)
+              p response
+            end
           end
         when Line::Bot::Event::Follow
           user = User.new

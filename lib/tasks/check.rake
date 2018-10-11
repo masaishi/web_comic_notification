@@ -38,7 +38,7 @@ namespace :check do
         end
 
         i += 1
-        sleep(rand(0.5..2.0))
+        sleep(rand(0.5..1.5))
         if i > 5000
           break
         end
@@ -62,7 +62,7 @@ namespace :check do
       notice.each do |comic|
         message = {
           type: 'text',
-          text: "#{comic.name}の最新話が更新されました！"
+          text: "#{comic.name}の最新話が更新されました！\n#{comic.site.url}#{comic.url}"
         }
         client.push_message(line_user_id,message)
 

@@ -1,11 +1,15 @@
 Rails.application.routes.draw do
   resources :users do
     member do
-      get :add_comic
+      get :bookmark
     end
   end
 
-  resources :comics
+  resources :comics do
+    member do
+      get :bookmark
+    end
+  end
   resources :sites
 
   post '/callback', to: 'webhook#callback'

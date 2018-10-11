@@ -26,7 +26,7 @@ class WebhookController < ApplicationController
           when Line::Bot::Event::MessageType::Text
             case event.message['text']
             when /http(s|)/
-              text = /(?<=http(s|)\/\/(www|))\w+(?=\/)/.match(event.message['text'])
+              text = event.message['text'].match(/(?<=http(s|)\/\/(www|))\w+(?=\/)/)
               message = {
                 type: 'text',
                 text: "#{text}"

@@ -59,7 +59,7 @@ namespace :check do
           type: 'text',
           text: "#{comic.name}の最新話が更新されました！"
         }
-        client.push_messeage(line_user_id,message)
+        client.push_message(line_user_id,message)
 
       end
     end

@@ -23,21 +23,6 @@ class WebhookController < ApplicationController
         case event
         when Line::Bot::Event::Message
           case event.type
-          when Line::Bot::Event::MessageType::Follow
-
-            # e_message = event.message['text'].split(" ")
-            # if e_message.include?("kaka")
-            user = User.new
-            user.name = "unknown"
-            user.line_user_id = event.source[userId]
-            user.save
-
-            message = {
-              type: 'text',
-              text: "webコミックサイトから、通知をしたい作品のURLを送るとその作品をブックマークし、更新されたら通知します。"
-            }
-            response = client.reply_message(event['replyToken'], message)
-            p response
           when Line::Bot::Event::MessageType::Text
 
             # e_message = event.message['text'].split(" ")
@@ -49,6 +34,18 @@ class WebhookController < ApplicationController
             response = client.reply_message(event['replyToken'], message)
             p response
           end
+        when Line::Bot::Event::Follow
+          user = User.new
+          user.name = "unknown"
+          user.line_user_id = event.source[userId]
+          user.save
+
+          message = {
+            type: 'text',
+            text: "webコミックサイトから、通知をしたい作品のURLを送るとその作品をブックマークし、更新されたら通知します。"
+          }
+          response = client.reply_message(event['replyToken'], message)
+          p response
         end
       }
       render status: 200, json: { message: 'OK' }

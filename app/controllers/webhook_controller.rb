@@ -38,7 +38,16 @@ class WebhookController < ApplicationController
             }
             response = client.reply_message(event['replyToken'], message)
             p response
-          when
+          when Line::Bot::Event::MessageType::Text
+
+            # e_message = event.message['text'].split(" ")
+            # if e_message.include?("kaka")
+            message = {
+              type: 'text',
+              text: "#{event.source[userId]}"
+            }
+            response = client.reply_message(event['replyToken'], message)
+            p response
           end
         end
       }

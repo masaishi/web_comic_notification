@@ -1,0 +1,15 @@
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/websocket-driver-0.7.0/ext/websocket-driver
+/Users/masaishi/.rbenv/versions/2.4.4/bin/ruby -r ./siteconf20180923-29653-19f5z89.rb extconf.rb
+creating Makefile
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/websocket-driver-0.7.0/ext/websocket-driver
+make "DESTDIR=" clean
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/websocket-driver-0.7.0/ext/websocket-driver
+make "DESTDIR="
+compiling websocket_mask.c
+linking shared-object websocket_mask.bundle
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/websocket-driver-0.7.0/ext/websocket-driver
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 websocket_mask.bundle ./.gem.20180923-29653-1i8m1c2

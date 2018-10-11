@@ -1,0 +1,15 @@
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+/Users/masaishi/.rbenv/versions/2.4.4/bin/ruby -r ./siteconf20180923-29653-1gej18.rb extconf.rb
+creating Makefile
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" clean
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR="
+compiling cruby.c
+linking shared-object bindex/cruby.bundle
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20180923-29653-xpg391/bindex

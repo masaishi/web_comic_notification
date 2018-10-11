@@ -1,0 +1,15 @@
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bootsnap-1.3.2/ext/bootsnap
+/Users/masaishi/.rbenv/versions/2.4.4/bin/ruby -r ./siteconf20180923-29653-16qs14x.rb extconf.rb
+creating Makefile
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bootsnap-1.3.2/ext/bootsnap
+make "DESTDIR=" clean
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bootsnap-1.3.2/ext/bootsnap
+make "DESTDIR="
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.bundle
+
+current directory: /Users/masaishi/Documents/do_program/Rails/web_comic_notification_system/vendor/bundle/gems/bootsnap-1.3.2/ext/bootsnap
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 bootsnap.bundle ./.gem.20180923-29653-1pc7yzk/bootsnap

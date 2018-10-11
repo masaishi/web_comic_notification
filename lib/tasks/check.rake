@@ -34,7 +34,7 @@ namespace :check do
     notices.each do |key,notice|
       line_token = User.find(key).line_token
       notice.each do |comic|
-        "#{comic.name}の最新話、#{comic.last_story}が更新されました。"
+        "#{comic.name}の最新話が更新されました！"
       end
     end
 

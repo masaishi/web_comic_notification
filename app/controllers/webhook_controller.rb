@@ -33,7 +33,7 @@ class WebhookController < ApplicationController
               text: event.source.userId
             }
             response = client.reply_message(event['replyToken'], message)
-            # p response
+            p response
           end
         end
       }

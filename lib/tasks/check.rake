@@ -1,6 +1,11 @@
 namespace :check do
   require 'line/bot'
   desc "最新話をチェック"
+  task :delete => :environment do
+    Comic.all.each do |comic|
+      comic.update(last_story: "ttsf3fs5tsfsdf")
+    end
+  end
   task :all => :environment do
     puts "test"
     notices = Hash.new()

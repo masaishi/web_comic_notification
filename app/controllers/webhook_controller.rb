@@ -37,7 +37,7 @@ class WebhookController < ApplicationController
         when Line::Bot::Event::Follow
           user = User.new
           user.name = "unknown"
-          user.line_user_id = event.source[userId]
+          user.line_user_id = event.source['userId']
           user.save
 
           message = {

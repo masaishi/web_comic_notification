@@ -1,4 +1,5 @@
 namespace :check do
+  require 'line/bot'
   desc "最新話をチェック"
   task :all => :environment do
     puts "test"

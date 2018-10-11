@@ -31,21 +31,24 @@ namespace :check do
       end
     end
 
+    def client
+      @client ||= Line::Bot::Client.new { |config|
+        config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+        config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+      }
+    end
+
     notices.each do |key,notice|
-      line_token = User.find(key).line_token
+      line_user_id = User.find(key).line_user_id
       notice.each do |comic|
-        "#{comic.name}の最新話が更新されました！"
+        message = {
+          type: 'text',
+          text: "#{comic.name}の最新話が更新されました！"
+        }
+        client.push_messeage(line_user_id,message)
+
       end
     end
 
-  end
-
-  private
-  
-  def client
-    @client ||= Line::Bot::Client.new { |config|
-      config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
-      config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
-    }
   end
 end

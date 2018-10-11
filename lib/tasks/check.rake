@@ -32,7 +32,7 @@ namespace :check do
         end
 
         i += 1
-        time.sleep(rand(0.5..2.0))
+        sleep(rand(0.5..2.0))
         if i > 5000
           break
         end

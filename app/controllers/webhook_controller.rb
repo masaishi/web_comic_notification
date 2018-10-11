@@ -31,7 +31,8 @@ class WebhookController < ApplicationController
                 compare_url = site.url.slice(/http(s|):\/\/(www.|)/,0)
                 if compare_url == url
                   url.slice!(/#{compare_url}/)
-                  site.comics.create(url: url)
+                  puts "\n\n\n\n\n#{url}"
+                  site.comics.create!(url: url)
                 end
               end
 

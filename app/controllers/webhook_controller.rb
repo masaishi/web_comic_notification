@@ -30,7 +30,7 @@ class WebhookController < ApplicationController
               Site.all.each do |site|
                 compare_url = site.url.slice(/http(s|):\/\/(www.|)/,0)
                 if compare_url == url
-                  url.slice!(/#{compare_url}/)
+                  url.slice!(/#{Regexp.new(compare_url)}/)
                   puts "\n\n\n\n\n#{url}"
                   site.comics.create!(url: url)
                 end
@@ -38,7 +38,7 @@ class WebhookController < ApplicationController
 
               message = {
                 type: 'text',
-                text: "#{text}"
+                text: "#{url}"
               }
               response = client.reply_message(event['replyToken'], message)
               p response

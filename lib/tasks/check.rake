@@ -3,6 +3,7 @@ namespace :check do
   task :all => :environment do
     puts "test"
     notices = Hash.new()
+    i = 0
 
     Site.all.each do |site|
       @methods = site.method.split(" ")
@@ -14,8 +15,10 @@ namespace :check do
         end
       end
 
+      agent = Mechanize.new
+      agent.user_agent_alias = 'Windows Mozilla'
+
       site.comics.all.each do |comic|
-        agent = Mechanize.new
         @page = agent.get(site.url + comic.url)
         last_story = selected_method()
 
@@ -28,6 +31,16 @@ namespace :check do
           end
         end
 
+        i += 1
+        time.sleep(rand(0.5..2.0))
+        if i > 5000
+          break
+        end
+
+      end
+
+      if i > 5000
+        break
       end
     end
 

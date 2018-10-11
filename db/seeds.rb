@@ -1,6 +1,6 @@
 10.times do |n|
   name = "user#{n}"
-  User.create!(name: name, password: "password",line_token: "k3riuwsj")
+  User.create!(name: name, password: "password",line_user_id: "k3riuwsj")
 end
 
 def create_site(name,url,method)

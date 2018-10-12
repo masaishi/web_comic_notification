@@ -35,8 +35,9 @@ class WebhookController < ApplicationController
                 compare_url.slice!(/http(s|):\/\/(www.|)/,0)
                 if compare_url == url
                   url.slice!(/#{Regexp.new(compare_url)}/)
-                  comic = site.comics.find(url: url[],0)
-                  unless comic
+                  begin
+                    comic = site.comics.find(url: url)
+                  rescue
                     comic = site.comics.create!(url: url)
                   end
                   User.find(line_user_id: event['source']['userId']).bookmark(comic.id)

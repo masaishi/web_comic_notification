@@ -31,6 +31,9 @@ class WebhookController < ApplicationController
               urls = url.split("/")
               text = "このコミックは現在通知できません。"
 
+              compare_url = ""
+              compare_urls = Array.new()
+
               Site.all.each do |site|
                 compare_url = site.url
                 compare_url.slice!(/http(s|):\/\/(www.|)/,0)
@@ -39,7 +42,7 @@ class WebhookController < ApplicationController
                 if compare_urls[0] == urls[0]
                   url.slice!(/#{Regexp.new(compare_url)}/)
                   begin
-                    comic = site.comics.find(url: url)
+                    comic = site.comics.find_by(url: url)
                     comic = site.comics.create!(url: url) unless comic
                   rescue
                     comic = site.comics.create!(url: url)
@@ -54,7 +57,7 @@ class WebhookController < ApplicationController
 
               message = {
                 type: 'text',
-                text: "#{urls[0]}\n\n\n#{compare_urls[0]}\n\n#{text}"
+                text: "#{comic}"
               }
               response = client.reply_message(event['replyToken'], message)
               p response

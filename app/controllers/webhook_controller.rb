@@ -40,6 +40,7 @@ class WebhookController < ApplicationController
                   url.slice!(/#{Regexp.new(compare_url)}/)
                   begin
                     comic = site.comics.find(url: url)
+                    comic = site.comics.create!(url: url) unless comic
                   rescue
                     comic = site.comics.create!(url: url)
                   end

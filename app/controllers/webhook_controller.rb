@@ -41,11 +41,12 @@ class WebhookController < ApplicationController
 
                 if compare_urls[0] == urls[0]
                   url.slice!(/#{Regexp.new(compare_url)}/)
+                  text = "url一致"
                   begin
                     comic = site.comics.find_by(url: url)
-                    comic = site.comics.create!(url: url) unless comic
+                    comic = site.comics.create(url: url) unless comic
                   rescue
-                    comic = site.comics.create!(url: url)
+                    comic = site.comics.create(url: url)
                   end
                   user = User.find_by(line_user_id: event['source']['userId'])
                   user.bookmark(comic.id)
@@ -57,7 +58,7 @@ class WebhookController < ApplicationController
 
               message = {
                 type: 'text',
-                text: "#{comic.url}"
+                text: "#{text}"
               }
               response = client.reply_message(event['replyToken'], message)
               p response

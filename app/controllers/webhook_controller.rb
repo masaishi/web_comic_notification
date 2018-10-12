@@ -26,15 +26,22 @@ class WebhookController < ApplicationController
           when Line::Bot::Event::MessageType::Text
             case event.message['text']
             when /http(s|)/
-              url = event.message['text'].slice!(/http(s|):\/\/(www.|)/,0)
-              # Site.all.each do |site|
-              #   compare_url = site.url.slice(/http(s|):\/\/(www.|)/,0)
-              #   if compare_url == url
-              #     url.slice!(/#{Regexp.new(compare_url)}/)
-              #
-              #     site.comics.create!(url: url)
-              #   end
-              # end
+              url = event.message['text']
+              url.slice!(/http(s|):\/\/(www.|)/,0)
+              catch(:loop) do
+                Site.all.each do |site|
+                  compare_url = site.url.slice(/http(s|):\/\/(www.|)/,0)
+                  if compare_url == url
+                    url.slice!(/#{Regexp.new(compare_url)}/)
+                    site.comics.all.each do |comic|
+                      url
+                      throw :loop
+
+                    end
+                    site.comics.create!(url: url)
+                  end
+                end
+              end
 
               message = {
                 type: 'text',

@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Bookmark</th>
+      <th>Site id</th>
       <th>Name</th>
       <th>Url</th>
       <th>Last story</th>
@@ -17,6 +18,7 @@
     <% @comics.each do |comic| %>
       <tr>
         <td><%= link_to 'Bookmark', comic %></td>
+        <td><%= comic.site_id %></td>
         <td><%= comic.name %></td>
         <td><%= comic.url %></td>
         <td><%= comic.last_story %></td>

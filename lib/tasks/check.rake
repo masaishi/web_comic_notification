@@ -16,10 +16,9 @@ namespace :check do
 
       if @methods[0] == "0"
         case @methods[1]
-        when "class"
+        when "class" then
           def selected_method() @page.at("[@class='#{@methods[2]}']").content end
-        end
-        when "id"
+        when "id" then
           def selected_method() @page.at("[@id='#{@methods[2]}']").content end
         end
       end

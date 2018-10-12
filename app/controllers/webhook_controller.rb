@@ -28,25 +28,27 @@ class WebhookController < ApplicationController
             when /http(s|)/
               url = event.message['text']
               url.slice!(/http(s|):\/\/(www.|)/,0)
-              catch(:loop) do
-                Site.all.each do |site|
-                  compare_url = site.url.slice(/http(s|):\/\/(www.|)/,0)
-                  if compare_url == url
-                    url.slice!(/#{Regexp.new(compare_url)}/)
-                    comic = site.comics.find(url: url)
-                    if comic
-                      User.find(line_user_id: event['source']['userId']).bookmark(comic.id)
-                      throw :loop
-                    else
-                      site.comics.create!(url: url)
-                    end
+              text = "このコミックは現在通知できません。"
+
+              Site.all.each do |site|
+                compare_url = site.url
+                compare_url.slice!(/http(s|):\/\/(www.|)/,0)
+                if compare_url == url
+                  url.slice!(/#{Regexp.new(compare_url)}/)
+                  comic = site.comics.find(url: url[],0)
+                  unless comic
+                    comic = site.comics.create!(url: url)
                   end
+                  User.find(line_user_id: event['source']['userId']).bookmark(comic.id)
+                  text = "ブックマークしました。"
+                  break
                 end
+
               end
 
               message = {
                 type: 'text',
-                text: "#{url}"
+                text: "#{url}\n\n\n#{text}"
               }
               response = client.reply_message(event['replyToken'], message)
               p response

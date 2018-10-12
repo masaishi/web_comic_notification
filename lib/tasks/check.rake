@@ -25,24 +25,27 @@ namespace :check do
       agent.user_agent_alias = 'Windows Mozilla'
 
       site.comics.all.each do |comic|
-        @page = agent.get(site.url + comic.url)
-        last_story = selected_method()
+        begin
+          @page = agent.get(site.url + comic.url)
+          last_story = selected_method()
 
-        if comic.last_story != last_story
-          comic.update(last_story: last_story)
-          comic.bookmarked.all.each do |user|
-            notices["#{user.id}"] = [] unless notices["#{user.id}"]
+          if comic.last_story != last_story
+            comic.update(last_story: last_story)
+            comic.bookmarked.all.each do |user|
+              notices["#{user.id}"] = [] unless notices["#{user.id}"]
 
-            notices["#{user.id}"] << comic
+              notices["#{user.id}"] << comic
+            end
           end
-        end
 
-        i += 1
-        sleep(rand(0.5..1.5))
-        if i > 5000
-          break
+          i += 1
+          sleep(rand(0.5..1.5))
+          if i > 5000
+            break
+          end
+        rescue
+          puts "失敗#{comic}"
         end
-
       end
 
       if i > 5000

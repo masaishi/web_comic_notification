@@ -57,7 +57,7 @@ class WebhookController < ApplicationController
 
               message = {
                 type: 'text',
-                text: "#{comic}"
+                text: "#{comic.url}"
               }
               response = client.reply_message(event['replyToken'], message)
               p response

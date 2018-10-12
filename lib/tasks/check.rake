@@ -68,7 +68,7 @@ namespace :check do
       notice.each do |comic|
         message = {
           type: 'text',
-          text: "#{comic.name}の最新話が更新されました！\n#{comic.site.url}#{comic.url}"
+          text: "最新話が更新されました！\n#{comic.site.url}#{comic.url}"
         }
         client.push_message(line_user_id,message)
       end

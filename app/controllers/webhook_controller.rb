@@ -33,12 +33,13 @@ class WebhookController < ApplicationController
                   compare_url = site.url.slice(/http(s|):\/\/(www.|)/,0)
                   if compare_url == url
                     url.slice!(/#{Regexp.new(compare_url)}/)
-                    site.comics.all.each do |comic|
-                      url
+                    comic = site.comics.find(url: url)
+                    if comic
+                      User.find(line_user_id: event['source']['userId']).bookmark(comic.id)
                       throw :loop
-
+                    else
+                      site.comics.create!(url: url)
                     end
-                    site.comics.create!(url: url)
                   end
                 end
               end

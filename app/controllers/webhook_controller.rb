@@ -44,7 +44,8 @@ class WebhookController < ApplicationController
                   rescue
                     comic = site.comics.create!(url: url)
                   end
-                  User.find(line_user_id: event['source']['userId']).bookmark(comic.id)
+                  user = User.find_by(line_user_id: event['source']['userId'])
+                  user.bookmark(comic.id)
                   text = "ブックマークしました。"
                   break
                 end

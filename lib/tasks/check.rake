@@ -73,4 +73,33 @@ namespace :check do
     end
 
   end
+
+  task :test => :environment do
+    url = "https://shonenjumpplus.com/episode/10833519556325021909"
+    url.slice!(/http(s|):\/\/(www.|)/,0)
+    urls = url.split("/")
+    text = "このコミックは現在通知できません。"
+
+    Site.all.each do |site|
+      compare_url = site.url
+      compare_url.slice!(/http(s|):\/\/(www.|)/,0)
+      compare_urls = compare_url.split("/")
+      puts "#{urls[0]}\n#{compare_urls[0]}"
+      if compare_urls[0] == urls[0]
+        url.slice!(/#{Regexp.new(compare_url)}/)
+        begin
+          comic = site.comics.find(url: url)
+          comic = site.comics.create!(url: url) unless comic
+        rescue
+          comic = site.comics.create!(url: url)
+        end
+        user = User.find_by(line_user_id: "U6a8c6f24f76db8ad13cbd846fb52dccc")
+        user.bookmark(comic.id)
+        text = "ブックマークしました。"
+        puts "bookmark"
+        break
+      end
+      puts "can't bookmark"
+    end
+  end
 end

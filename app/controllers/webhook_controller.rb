@@ -28,12 +28,15 @@ class WebhookController < ApplicationController
             when /http(s|)/
               url = event.message['text']
               url.slice!(/http(s|):\/\/(www.|)/,0)
+              urls = url.split("/")
               text = "このコミックは現在通知できません。"
 
               Site.all.each do |site|
                 compare_url = site.url
                 compare_url.slice!(/http(s|):\/\/(www.|)/,0)
-                if compare_url == url
+                compare_urls = compare_url.split("/")
+
+                if compare_urls[0] == urls[0]
                   url.slice!(/#{Regexp.new(compare_url)}/)
                   begin
                     comic = site.comics.find(url: url)

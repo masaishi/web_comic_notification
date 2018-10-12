@@ -53,7 +53,7 @@ class WebhookController < ApplicationController
 
               message = {
                 type: 'text',
-                text: "#{url}\n\n\n#{text}"
+                text: "#{urls[0]}\n\n\n#{compare_urls[0]}\n\n#{text}"
               }
               response = client.reply_message(event['replyToken'], message)
               p response

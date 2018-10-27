@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_09_133321) do
+ActiveRecord::Schema.define(version: 2018_10_27_063508) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer "user_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2018_10_09_133321) do
     t.string "last_story"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "send_url"
     t.index ["site_id"], name: "index_comics_on_site_id"
   end
 

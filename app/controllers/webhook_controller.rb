@@ -7,8 +7,6 @@ class WebhookController < ApplicationController
 
     end
 
-
-
     def callback
       body = request.body.read
 
@@ -83,7 +81,6 @@ class WebhookController < ApplicationController
               else
                 user.bookmark(comic.id)
                 text = "ブックマークしました。"
-
               end
 
               message = {
@@ -94,7 +91,7 @@ class WebhookController < ApplicationController
             else
               message = {
                 type: 'text',
-                text: "それ以外"
+                text: "webコミックのURLをお送りください"
               }
               response = client.reply_message(event['replyToken'], message)
               p response

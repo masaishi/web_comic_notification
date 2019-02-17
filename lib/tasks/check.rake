@@ -14,30 +14,35 @@ namespace :check do
     agent.user_agent_alias = 'Windows Mozilla'
 
     class Scraping
-      def initialize(methods, page)
-        @methods = methods
+      def initialize(site, page)
+        @methods = site.method.split(" ")
+        @methods[0] = @methods[0].to_i if @methods[0]
+        @methods[3] = @methods[3].to_i if @methods[3]
+
+        @site_id = site.id
         @page = page
       end
 
       def get
         return_array = []
-        @methods[0] = @methods[0].to_i
         if @methods[0] == 0
           if @methods[1] == "class"
-            search_values = @page.at("[@class='#{@methods[2]}']")
+            search_values = @page.search("[@class='#{@methods[2]}']")
           elsif @methods[1] == "id"
-            search_values = @page.at("[@id='#{@methods[2]}']")
+            search_values = @page.search("[@id='#{@methods[2]}']")
           end
         end
 
         # 漫画ごとの処理
-        if @methods[3]
-          case @methods.to_i
-          when 0
-
+        if @methods[3] == 1
+          case @site_id
+          when 1
+            # ジャンププラス
+            return_array[0] = search_values[0].xpath(".//h4").text.match(/\[(.+)\]/)[1]
+            return_array[1] = search_values[0].get_attribute(:href)
           end
         else
-          return_array[0] = search_values.content
+          return_array[0] = search_values[0].content
         end
 
 
@@ -54,12 +59,10 @@ namespace :check do
     end
 
     Site.all.each do |site|
-      methods = site.method.split(" ")
-
       site.comics.all.each do |comic|
         begin
           page = agent.get(site.url + comic.url)
-          scraping_array = Scraping.new(methods, page).get
+          scraping_array = Scraping.new(site, page).get
           if comic.last_story != scraping_array[0]
             comic.update(last_story: scraping_array[0])
             if scraping_array[1]
@@ -77,7 +80,7 @@ namespace :check do
             break
           end
         rescue => error
-          puts "失敗#{error}"
+          puts "失敗#{comic.url}"
           line_user_id = User.first.line_user_id
           message = {
             type: 'text',
@@ -96,13 +99,19 @@ namespace :check do
     end
 
     notices.each do |key,notice|
-      line_user_id = User.find(key).line_user_id
+      user = User.find(key)
       notice.each do |comic|
+        if comic.send_url != false
+          send_url =  comic.site.url + comic.url
+        else
+          send_url = comic.send_url
+        end
+
         message = {
           type: 'text',
-          text: "最新話が更新されました！\n#{comic.site.url}#{comic.url}"
+          text: "最新話が更新されました！\n#{send_url}"
         }
-        client.push_message(line_user_id,message)
+        client.push_message(user.line_user_id,message)
       end
     end
   end
